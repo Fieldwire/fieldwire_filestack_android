@@ -31,6 +31,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="0dp"
+        android:layout_gravity="center_horizontal"
         android:text="@string/filestack__auth_title"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
@@ -43,6 +44,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
+        android:layout_gravity="center_horizontal"
         android:text="@string/filestack__auth_description"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
@@ -65,6 +67,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
+        android:layout_gravity="center_horizontal"
         android:text="@string/filestack__auth_action"
         android:textAlignment="center"/>
 

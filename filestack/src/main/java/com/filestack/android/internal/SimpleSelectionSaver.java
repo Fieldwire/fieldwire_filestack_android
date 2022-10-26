@@ -64,6 +64,31 @@ public class SimpleSelectionSaver implements SelectionSaver {
     }
 
     @Override
+    public boolean add(Selection item) {
+        boolean isSaved = false;
+
+        boolean wasEmpty = isEmpty();
+
+        if (!isSelected(item)) {
+            selections.add(item);
+            isSaved = true;
+        }
+
+        boolean isEmpty = isEmpty();
+
+        if (listener != null && wasEmpty != isEmpty) {
+            listener.onEmptyChanged(isEmpty);
+        }
+
+        return isSaved;
+    }
+
+    @Override
+    public boolean remove(Selection selection) {
+        return selections.remove(selection);
+    }
+
+    @Override
     public boolean isSelected(Selection item) {
         return selections.contains(item);
     }

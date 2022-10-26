@@ -10,11 +10,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.ImageViewCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import com.filestack.android.Selection;
 import com.filestack.android.Theme;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_FIRST_USER;
 
@@ -39,11 +41,12 @@ import static android.app.Activity.RESULT_FIRST_USER;
  * @see <a href="https://developer.android.com/guide/topics/providers/document-provider">
  *     https://developer.android.com/guide/topics/providers/document-provider</a>
  */
-public class LocalFilesFragment extends Fragment implements View.OnClickListener {
+public class LocalFilesFragment extends Fragment implements View.OnClickListener,
+        LocalFilesAdapter.LocalFilesInteractionListener {
     private static final String ARG_ALLOW_MULTIPLE_FILES = "multipleFiles";
     private static final int READ_REQUEST_CODE = RESULT_FIRST_USER;
     private static final String ARG_THEME = "theme";
-    private LocalFilesAdapter adapter = new LocalFilesAdapter();
+    private LocalFilesAdapter adapter = new LocalFilesAdapter(this);
     private ImageView uploadLocalFilesImageView;
     private Button openGalleryButton;
     boolean allowMultipleFiles = true;
@@ -70,7 +73,7 @@ public class LocalFilesFragment extends Fragment implements View.OnClickListener
         ImageViewCompat.setImageTintList((uploadLocalFilesImageView), ColorStateList.valueOf(theme.getTextColor()));
         RecyclerView filesListView = view.findViewById(R.id.gallery_list);
         filesListView.setLayoutManager(new LinearLayoutManager(getContext()));
-        filesListView.setItemAnimator(new DefaultItemAnimator());
+        filesListView.setItemAnimator(null);
         filesListView.setAdapter(adapter);
         return view;
     }
@@ -124,29 +127,36 @@ public class LocalFilesFragment extends Fragment implements View.OnClickListener
                 uris.add(resultData.getData());
             }
 
+            List<Selection> newSelections = new ArrayList<>();
+
             for (Uri uri : uris) {
                 Selection selection = processUri(uri);
-                Util.getSelectionSaver().toggleItem(selection);
-            }
-
-            //update file names
-            ArrayList<Selection> selections = Util.getSelectionSaver().getItems();
-            ArrayList<String> fileNames = new ArrayList<>();
-            for (Selection selection : selections) {
-                fileNames.add(selection.getName());
-            }
-
-            if (fileNames.size() > 0) {
-                hideUploadButtonIfRequired();
-                uploadLocalFilesImageView.setVisibility(View.GONE);
-            } else {
-                openGalleryButton.setVisibility(View.VISIBLE);
-                uploadLocalFilesImageView.setVisibility(View.VISIBLE);
+                if (Util.getSelectionSaver().add(selection)) {
+                    newSelections.add(selection);
+                }
             }
 
             // inform adapter about the change
-            adapter.updateFileNames(fileNames);
+            adapter.addSelections(newSelections);
+            updateUploadVisibility();
         }
+    }
+
+    private void updateUploadVisibility() {
+        if (adapter.getItemCount() > 0) {
+            hideUploadButtonIfRequired();
+            uploadLocalFilesImageView.setVisibility(View.GONE);
+        } else {
+            openGalleryButton.setVisibility(View.VISIBLE);
+            uploadLocalFilesImageView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void clearSelection(@NonNull Selection selection) {
+        Util.getSelectionSaver().remove(selection);
+        adapter.removeSelection(selection);
+        updateUploadVisibility();
     }
 
     private void hideUploadButtonIfRequired() {

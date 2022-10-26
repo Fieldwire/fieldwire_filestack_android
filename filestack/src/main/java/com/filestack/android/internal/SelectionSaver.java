@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 /** Manages a user's file selections. Used to save selections and notify others about changes. */
 public interface SelectionSaver {
+    boolean add(Selection selection);
+    boolean remove(Selection selection);
     boolean toggleItem(Selection selection);
     boolean isSelected(Selection selection);
     void setItemChangeListener(Listener listener);

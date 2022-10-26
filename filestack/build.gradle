@@ -1,24 +1,8 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-    }
-}
-
-plugins {
-    id 'com.github.dcendents.android-maven' version '2.0'
-    id 'com.jfrog.bintray' version '1.7.3'
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 group = 'com.filestack'
-version = '5.6.7'
+version = '5.6.8'
 project.archivesBaseName = 'fieldwire-filestack-android'
 
 android {
@@ -70,6 +54,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
+
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
@@ -97,36 +82,4 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives javadocJar
     archives sourcesJar
-}
-
-
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser')
-            : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey')
-            : System.getenv('BINTRAY_API_KEY')
-    configurations = ['archives']
-    publish = true
-    pkg {
-        repo = 'maven'
-        userOrg = 'filestack'
-        name = 'filestack-android'
-        desc = 'Official Android SDK for Filestack.'
-
-        publicDownloadNumbers = true
-        licenses = ['Apache-2.0']
-
-        websiteUrl = 'https://filestack.com'
-        vcsUrl = 'https://github.com/filestack/filestack-android.git'
-        issueTrackerUrl = 'https://github.com/filestack/filestack-android/issues'
-
-        githubRepo = 'filestack/filestack-android'
-        githubReleaseNotesFile = 'CHANGELOG.md'
-
-        version {
-            name = project.version
-            vcsTag = project.version
-            released = new Date()
-        }
-    }
 }

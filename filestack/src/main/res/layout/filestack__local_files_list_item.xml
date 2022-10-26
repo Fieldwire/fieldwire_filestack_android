@@ -14,10 +14,21 @@
 
     <TextView
         android:id="@+id/text_id"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:textColor="@android:color/white"
         android:text="Planet Name" />
+
+    <ImageView
+        android:id="@+id/image_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
 </LinearLayout>
