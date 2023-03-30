@@ -187,7 +187,7 @@ public class FsActivity extends AppCompatActivity implements
         Config config = (Config) intent.getSerializableExtra(FsConstants.EXTRA_CONFIG);
         if (config != null) {
             String sessionToken = preferences.getString(PREF_SESSION_TOKEN, null);
-            Util.initializeClientIfNeeded(config, sessionToken);
+            Util.initializeClient(config, sessionToken);
 
             if (savedInstanceState == null) {
                 Util.getSelectionSaver().clear();
