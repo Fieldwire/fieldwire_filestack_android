@@ -70,7 +70,7 @@ tasks.register('sourcesJar', Jar) {
 tasks.register('javadoc', Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     options.addStringOption('Xdoclint:none', '-quiet')
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += files("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar")
     destinationDir = file("../docs/")
 }
 
