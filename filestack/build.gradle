@@ -61,34 +61,36 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
-
-tasks.register('sourcesJar', Jar) {
-    from android.sourceSets.main.java.srcDirs
-    archiveClassifier.set('sources')
-}
-
-tasks.register('javadoc', Javadoc) {
-    dependsOn('compileDebugKotlin', 'generateReleaseRFile','compileReleaseKotlin')
-    source = android.sourceSets.main.java.srcDirs
-    options.addStringOption('Xdoclint:none', '-quiet')
-    classpath += files("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar")
-    destinationDir = file("../docs/")
-}
-
-// Add dependencies to javadoc classpath so annotations work
-afterEvaluate {
-    javadoc.classpath += files(android.libraryVariants.collect { variant ->
-        variant.getJavaCompileProvider().get().getClasspath().files
-    })
-}
-
-tasks.register('javadocJar', Jar) {
-    dependsOn javadoc
-    archiveClassifier.set('javadoc')
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
+// Commented out as javadoc tasks caused a build issue on jitpack.io and it's related to a failed task that ran on this
+// build.gradle that doesn't even exist (:filestack:generateMetadataFileForFilestackPublication)
+//
+//tasks.register('sourcesJar', Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    archiveClassifier.set('sources')
+//}
+//
+//tasks.register('javadoc', Javadoc) {
+//    dependsOn('compileDebugKotlin', 'generateReleaseRFile','compileReleaseKotlin')
+//    source = android.sourceSets.main.java.srcDirs
+//    options.addStringOption('Xdoclint:none', '-quiet')
+//    classpath += files("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar")
+//    destinationDir = file("../docs/")
+//}
+//
+//// Add dependencies to javadoc classpath so annotations work
+//afterEvaluate {
+//    javadoc.classpath += files(android.libraryVariants.collect { variant ->
+//        variant.getJavaCompileProvider().get().getClasspath().files
+//    })
+//}
+//
+//tasks.register('javadocJar', Jar) {
+//    dependsOn javadoc
+//    archiveClassifier.set('javadoc')
+//    from javadoc.destinationDir
+//}
+//
+//artifacts {
+//    archives javadocJar
+//    archives sourcesJar
+//}
