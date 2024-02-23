@@ -6,13 +6,11 @@ version = '5.6.8'
 project.archivesBaseName = 'fieldwire-filestack-android'
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 33
-        versionCode 1
-        versionName version
+        targetSdkVersion 34
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -30,6 +28,15 @@ android {
             consumerProguardFile 'consumer-proguard-rules.pro'
         }
     }
+    namespace 'com.filestack.android'
+    buildFeatures {
+        buildConfig true
+    }
+
+    compileOptions {
+        sourceCompatibility 17
+        targetCompatibility 17
+    }
 }
 
 dependencies {
@@ -45,7 +52,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
 
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -54,32 +61,36 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
-
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    options.addStringOption('Xdoclint:none', '-quiet')
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    destinationDir = file("../docs/")
-}
-
-// Add dependencies to javadoc classpath so annotations work
-afterEvaluate {
-    javadoc.classpath += files(android.libraryVariants.collect { variant ->
-        variant.javaCompiler.classpath.files
-    })
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
+// Commented out as javadoc tasks caused a build issue on jitpack.io and it's related to a failed task that ran on this
+// build.gradle that doesn't even exist (:filestack:generateMetadataFileForFilestackPublication)
+//
+//tasks.register('sourcesJar', Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    archiveClassifier.set('sources')
+//}
+//
+//tasks.register('javadoc', Javadoc) {
+//    dependsOn('compileDebugKotlin', 'generateReleaseRFile','compileReleaseKotlin')
+//    source = android.sourceSets.main.java.srcDirs
+//    options.addStringOption('Xdoclint:none', '-quiet')
+//    classpath += files("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar")
+//    destinationDir = file("../docs/")
+//}
+//
+//// Add dependencies to javadoc classpath so annotations work
+//afterEvaluate {
+//    javadoc.classpath += files(android.libraryVariants.collect { variant ->
+//        variant.getJavaCompileProvider().get().getClasspath().files
+//    })
+//}
+//
+//tasks.register('javadocJar', Jar) {
+//    dependsOn javadoc
+//    archiveClassifier.set('javadoc')
+//    from javadoc.destinationDir
+//}
+//
+//artifacts {
+//    archives javadocJar
+//    archives sourcesJar
+//}
