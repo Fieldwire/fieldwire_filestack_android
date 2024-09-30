@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.filestack.android.FsActivity;
 import com.filestack.android.FsConstants;
 import com.filestack.android.R;
 import com.filestack.android.Selection;
@@ -149,6 +150,10 @@ public class LocalFilesFragment extends Fragment implements View.OnClickListener
         } else {
             openGalleryButton.setVisibility(View.VISIBLE);
             uploadLocalFilesImageView.setVisibility(View.VISIBLE);
+        }
+
+        if (getActivity() instanceof FsActivity activity) {
+            activity.refreshUploadMenuItem();
         }
     }
 
