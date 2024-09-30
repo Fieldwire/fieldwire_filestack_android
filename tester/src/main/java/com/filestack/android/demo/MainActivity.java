@@ -3,6 +3,7 @@ package com.filestack.android.demo;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         String mimeFilter = sharedPref.getString("mime_filter", null);
         List<String> mimeTypes = Arrays.asList(mimeFilter.split(","));
 
-        String apiKey = sharedPref.getString("api_key", null);
+        String apiKey = "ACGv8iMoCTXS27m716Xsqz";// sharedPref.getString("api_key", null);
         String policy = sharedPref.getString("policy", null);
         String signature = sharedPref.getString("signature", null);
 
@@ -81,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
         Theme theme = new Theme.Builder()
                 .title(sharedPref.getString("theme_title", null))
-                .accentColor(sharedPref.getInt("theme_accent", ContextCompat.getColor(this, R.color.colorAccent)))
-                .backgroundColor(sharedPref.getInt("theme_background", ContextCompat.getColor(this, R.color.colorPrimary)))
+                //.accentColor(sharedPref.getInt("theme_accent", ContextCompat.getColor(this, R.color.colorAccent)))
+                // .accentColor(Color.rgb(53, 58, 67))
+                // .backgroundColor(sharedPref.getInt("theme_background", ContextCompat.getColor(this, R.color.colorPrimary)))
                 .textColor(sharedPref.getInt("theme_text", ContextCompat.getColor(this, R.color.text)))
                 .build();
 
