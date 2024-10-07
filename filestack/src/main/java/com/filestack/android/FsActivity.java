@@ -105,6 +105,8 @@ public class FsActivity extends AppCompatActivity implements
 
     private Theme theme;
 
+    private Menu optionsMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -278,6 +280,7 @@ public class FsActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        optionsMenu = menu;
         getMenuInflater().inflate(R.menu.filestack__menu, menu);
         menu.findItem(R.id.action_about).setVisible(showVersionInfo);
         for (int i = 0; i < menu.size(); i++) {
@@ -296,6 +299,17 @@ public class FsActivity extends AppCompatActivity implements
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_upload).setVisible(!Util.getSelectionSaver().isEmpty());
         return true;
+    }
+
+    public void refreshUploadMenuItem() {
+        if (optionsMenu == null) {
+            return;
+        }
+
+        MenuItem uploadMenuItem = optionsMenu.findItem(R.id.action_upload);
+        if (uploadMenuItem != null) {
+            uploadMenuItem.setVisible(!Util.getSelectionSaver().isEmpty());
+        }
     }
 
     @Override
