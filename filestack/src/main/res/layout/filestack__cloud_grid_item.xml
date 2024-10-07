@@ -1,22 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <com.filestack.android.internal.SquareImageView
-        android:id="@+id/icon"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.filestack.android.internal.SquareImageView
+            android:id="@+id/icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/checkbox"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:importantForAccessibility="no"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/filestack__ic_list_checkbox" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"/>
+        android:layout_marginEnd="@dimen/filestack__list_item_horizontal_padding"
+        android:layout_marginRight="@dimen/filestack__list_item_horizontal_padding"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        tools:text="NAME OF THE FILE" />
 
-    <ImageView
-        app:srcCompat="@drawable/filestack__ic_list_checkbox"
-        android:id="@+id/checkbox"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:visibility="invisible"
-        android:layout_margin="8dp"/>
-
-</FrameLayout>
+    <TextView
+        android:id="@+id/info"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/filestack__list_item_horizontal_padding"
+        android:layout_marginRight="@dimen/filestack__list_item_horizontal_padding"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/filestack__text_secondary"
+        tools:text="DESCRIPTION OF THE FILE" />
+</LinearLayout>

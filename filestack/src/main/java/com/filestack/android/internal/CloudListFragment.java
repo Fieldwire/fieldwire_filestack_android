@@ -83,7 +83,7 @@ public class CloudListFragment extends Fragment implements BackButtonListener {
         }
 
         int spacing = getResources().getDimensionPixelSize(R.dimen.filestack__grid_spacing);
-        spacer = new SpacingDecoration(spacing, spacing, false);
+        spacer = new SpacingDecoration(spacing, spacing * 2, false);
 
         setupRecyclerLayout();
 
