@@ -109,6 +109,7 @@ public class FsActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("FSActivity.onCreate()");
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
