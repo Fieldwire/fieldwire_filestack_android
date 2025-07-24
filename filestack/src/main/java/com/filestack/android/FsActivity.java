@@ -58,6 +58,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.core.view.ViewCompat;
+
 import static com.filestack.android.utils.RxUtils.zipWithTimer;
 
 /** UI to select and upload files from local and cloud sources.
@@ -126,9 +130,26 @@ public class FsActivity extends AppCompatActivity implements
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(theme.getAccentColor());
+//            getWindow().setStatusBarColor(theme.getAccentColor());
+//            Log.i("PLIUUU","FSActivity Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP");
+            System.out.println("FSActivity Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP");
             progressBar.setIndeterminateTintList(ColorStateList.valueOf(theme.getAccentColor()));
         }
+//
+//        // Enable edge-to-edge rendering
+//        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+//
+//        // Apply system bar color and icon contrast
+//        View decorView = getWindow().getDecorView();
+//        WindowInsetsControllerCompat insetsController = ViewCompat.getWindowInsetsController(decorView);
+//
+//        // Adjust status bar icon color (true = light icons, false = dark icons)
+//        boolean useLightIcons = ColorUtils.calculateLuminance(theme.getAccentColor()) < 0.5;
+//        insetsController.setAppearanceLightStatusBars(!useLightIcons);
+//
+//        // Apply background color under system bars (optional visual match)
+//        decorView.setBackgroundColor(theme.getAccentColor());
+
         getSupportActionBar().setTitle(theme.getTitle());
         toolbar.setTitleTextColor(theme.getBackgroundColor());
         toolbar.setSubtitleTextColor(ColorUtils.setAlphaComponent(theme.getBackgroundColor(), 220));
