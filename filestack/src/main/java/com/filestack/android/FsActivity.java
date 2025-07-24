@@ -135,20 +135,20 @@ public class FsActivity extends AppCompatActivity implements
             System.out.println("FSActivity Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP");
             progressBar.setIndeterminateTintList(ColorStateList.valueOf(theme.getAccentColor()));
         }
-//
-//        // Enable edge-to-edge rendering
-//        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-//
-//        // Apply system bar color and icon contrast
-//        View decorView = getWindow().getDecorView();
-//        WindowInsetsControllerCompat insetsController = ViewCompat.getWindowInsetsController(decorView);
-//
-//        // Adjust status bar icon color (true = light icons, false = dark icons)
-//        boolean useLightIcons = ColorUtils.calculateLuminance(theme.getAccentColor()) < 0.5;
-//        insetsController.setAppearanceLightStatusBars(!useLightIcons);
-//
-//        // Apply background color under system bars (optional visual match)
-//        decorView.setBackgroundColor(theme.getAccentColor());
+
+        // Enable edge-to-edge rendering
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
+        // Apply system bar color and icon contrast
+        View decorView = getWindow().getDecorView();
+        WindowInsetsControllerCompat insetsController = ViewCompat.getWindowInsetsController(decorView);
+
+        // Adjust status bar icon color (true = light icons, false = dark icons)
+        boolean useLightIcons = ColorUtils.calculateLuminance(theme.getAccentColor()) < 0.5;
+        insetsController.setAppearanceLightStatusBars(!useLightIcons);
+
+        // Apply background color under system bars (optional visual match)
+        decorView.setBackgroundColor(theme.getAccentColor());
 
         getSupportActionBar().setTitle(theme.getTitle());
         toolbar.setTitleTextColor(theme.getBackgroundColor());
