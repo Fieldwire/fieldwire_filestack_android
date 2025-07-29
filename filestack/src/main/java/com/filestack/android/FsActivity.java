@@ -127,7 +127,6 @@ public class FsActivity extends AppCompatActivity implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             progressBar.setIndeterminateTintList(ColorStateList.valueOf(theme.getAccentColor()));
         }
-
         getSupportActionBar().setTitle(theme.getTitle());
         toolbar.setTitleTextColor(theme.getBackgroundColor());
         toolbar.setSubtitleTextColor(ColorUtils.setAlphaComponent(theme.getBackgroundColor(), 220));
