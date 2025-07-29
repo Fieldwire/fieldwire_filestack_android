@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
         String policy = sharedPref.getString("policy", null);
         String signature = sharedPref.getString("signature", null);
 
-//        FSActivity.onCreate()
-        System.out.println(apiKey);
 
         if (apiKey == null) {
             Toast.makeText(this, R.string.error_no_api_key, Toast.LENGTH_SHORT).show();
