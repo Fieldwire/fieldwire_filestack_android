@@ -6,11 +6,11 @@ version = '5.6.8'
 project.archivesBaseName = 'fieldwire-filestack-android'
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 34
+        targetSdkVersion 35
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
