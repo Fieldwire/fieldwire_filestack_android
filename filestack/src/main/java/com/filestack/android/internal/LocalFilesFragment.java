@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.filestack.android.FsActivity;
 import com.filestack.android.FsConstants;
@@ -129,16 +130,28 @@ public class LocalFilesFragment extends Fragment implements View.OnClickListener
             }
 
             List<Selection> newSelections = new ArrayList<>();
+            List<String> excludedFiles = new ArrayList<>();
 
             for (Uri uri : uris) {
                 Selection selection = processUri(uri);
+                if (selection == null) {
+                    continue;
+                }
                 // Skip files excluded by the library (e.g. SVG)
                 if (Util.mimeExcluded(selection.getMimeType())) {
+                    excludedFiles.add(selection.getName());
                     continue;
                 }
                 if (Util.getSelectionSaver().add(selection)) {
                     newSelections.add(selection);
                 }
+            }
+
+            if (!excludedFiles.isEmpty()) {
+                String message = excludedFiles.size() == 1
+                        ? "File type not supported: " + excludedFiles.get(0)
+                        : excludedFiles.size() + " files skipped (unsupported type)";
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
 
             // inform adapter about the change
