@@ -140,6 +140,14 @@ public class LocalFilesFragment extends Fragment implements View.OnClickListener
                 // Skip files excluded by the library (e.g. SVG)
                 if (Util.mimeExcluded(selection.getMimeType())) {
                     excludedFiles.add(selection.getName());
+                    // Release the persisted URI permission we took in processUri()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        try {
+                            getActivity().getContentResolver().releasePersistableUriPermission(
+                                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                            | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        } catch (SecurityException ignored) { }
+                    }
                     continue;
                 }
                 if (Util.getSelectionSaver().add(selection)) {
