@@ -27,6 +27,7 @@ import com.filestack.android.Selection;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -71,9 +72,21 @@ public class UploadService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final ArrayList<Selection> selections = intent.getParcelableArrayListExtra(FsConstants.EXTRA_SELECTION_LIST);
+        final String[] mimeTypes = intent.getStringArrayExtra(FsConstants.EXTRA_MIME_TYPES);
         StorageOptions storeOpts = (StorageOptions) intent.getSerializableExtra(FsConstants.EXTRA_STORE_OPTS);
         if (storeOpts == null) {
             storeOpts = new StorageOptions.Builder().build();
+        }
+
+        // Filter out selections that are not allowed or are excluded (e.g. SVG)
+        Iterator<Selection> iterator = selections.iterator();
+        while (iterator.hasNext()) {
+            Selection selection = iterator.next();
+            String mime = selection.getMimeType();
+            boolean allowed = mimeTypes == null || mimeTypes.length == 0 || Util.mimeAllowed(mimeTypes, mime);
+            if (!allowed || Util.mimeExcluded(mime)) {
+                iterator.remove();
+            }
         }
 
         Notification serviceNotification =

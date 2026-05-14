@@ -132,6 +132,10 @@ public class LocalFilesFragment extends Fragment implements View.OnClickListener
 
             for (Uri uri : uris) {
                 Selection selection = processUri(uri);
+                // Skip files excluded by the library (e.g. SVG)
+                if (Util.mimeExcluded(selection.getMimeType())) {
+                    continue;
+                }
                 if (Util.getSelectionSaver().add(selection)) {
                     newSelections.add(selection);
                 }
