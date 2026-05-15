@@ -226,4 +226,17 @@ public class Util {
         boolean allTypesAllowed = Arrays.asList(filters).contains("*/*");
         return allTypesAllowed || MimeTypeFilter.matches(mimeType, filters) != null;
     }
+
+    /** Returns true if the MIME type is excluded by the library. */
+    public static boolean mimeExcluded(String mimeType) {
+        if (mimeType == null) return false;
+        return MimeTypeFilter.matches(mimeType, EXCLUDED_MIME_TYPES) != null;
+    }
+
+    /**
+     * MIME types that are blocked from being uploaded, regardless of what the host app configures.
+     */
+    public static final String[] EXCLUDED_MIME_TYPES = {
+        "image/svg+xml"
+    };
 }

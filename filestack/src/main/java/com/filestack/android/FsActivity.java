@@ -411,9 +411,11 @@ public class FsActivity extends AppCompatActivity implements
         if (autoUpload) {
             StorageOptions storeOpts = (StorageOptions) activityIntent
                     .getSerializableExtra(FsConstants.EXTRA_STORE_OPTS);
+            String[] mimeTypes = activityIntent.getStringArrayExtra(FsConstants.EXTRA_MIME_TYPES);
             Intent uploadIntent = new Intent(this, UploadService.class);
             uploadIntent.putExtra(FsConstants.EXTRA_STORE_OPTS, storeOpts);
             uploadIntent.putExtra(FsConstants.EXTRA_SELECTION_LIST, selections);
+            uploadIntent.putExtra(FsConstants.EXTRA_MIME_TYPES, mimeTypes);
             ContextCompat.startForegroundService(this, uploadIntent);
         }
 

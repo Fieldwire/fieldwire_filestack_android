@@ -107,7 +107,8 @@ class CloudListAdapter extends RecyclerView.Adapter<CloudListViewHolder> impleme
         holder.setInfoVisible(!TextUtils.isEmpty(info));
         holder.setIcon(item.getThumbnail());
         holder.setOnClickListener(this);
-        holder.setEnabled(item.isFolder() || Util.mimeAllowed(mimeTypes, item.getMimetype()));
+        holder.setEnabled(item.isFolder() || (Util.mimeAllowed(mimeTypes, item.getMimetype())
+                && !Util.mimeExcluded(item.getMimetype())));
         Selection selection = SelectionFactory.from(sourceId, item);
         holder.setSelected(selector.isSelected(selection));
         String nextToken = nextTokens.get(currentPath);
@@ -205,6 +206,9 @@ class CloudListAdapter extends RecyclerView.Adapter<CloudListViewHolder> impleme
             return;
         }
 
+        if (Util.mimeExcluded(item.getMimetype())) {
+            return;
+        }
 
         Selection selection = SelectionFactory.from(sourceId, item);
         boolean selected = selector.toggle(selection);
