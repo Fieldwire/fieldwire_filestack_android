@@ -15,6 +15,10 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.manager.SupportRequestManagerFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.activity.EdgeToEdge;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
@@ -109,11 +113,37 @@ public class FsActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
 
         setContentView(R.layout.filestack__activity_filestack);
+
+        // Override DrawerLayout's inset consumption (phones only — tablets use FrameLayout)
+        View drawerLayout = findViewById(R.id.drawer_layout);
+        if (drawerLayout != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(drawerLayout, (view, windowInsets) -> {
+                return windowInsets;
+            });
+        }
+
+        // Apply system bar padding to main content area
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_layout), (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+            return WindowInsetsCompat.CONSUMED;
+        });
+
+        // Apply system bar padding to navigation drawer so header doesn't overlap status bar
+        View navView = findViewById(R.id.nav_view);
+        if (navView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(navView, (view, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+                view.setPadding(view.getPaddingLeft(), insets.top, view.getPaddingRight(), view.getPaddingBottom());
+                return WindowInsetsCompat.CONSUMED;
+            });
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         progressBar = findViewById(R.id.bar);
