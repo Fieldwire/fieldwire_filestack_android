@@ -135,6 +135,16 @@ public class FsActivity extends AppCompatActivity implements
             return WindowInsetsCompat.CONSUMED;
         });
 
+        // Apply system bar padding to navigation drawer so header doesn't overlap status bar
+        View navView = findViewById(R.id.nav_view);
+        if (navView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(navView, (view, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+                view.setPadding(view.getPaddingLeft(), insets.top, view.getPaddingRight(), view.getPaddingBottom());
+                return WindowInsetsCompat.CONSUMED;
+            });
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         progressBar = findViewById(R.id.bar);
         setSupportActionBar(toolbar);
