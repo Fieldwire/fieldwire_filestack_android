@@ -130,7 +130,7 @@ public class FsActivity extends AppCompatActivity implements
 
         // Apply system bar padding to main content area
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_layout), (view, windowInsets) -> {
-            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
             view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
